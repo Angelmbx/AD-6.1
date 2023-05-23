@@ -15,13 +15,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
+//Se vuelven a importar  ConnectionManager y MyDataSource no desde modelo como estaba antes
+//sino del proyecto nuevo Connection.util despues de hacer el empaquetado y pegar las dependencias en el pom del primer proyecto
+import connection.util.ConnectionManager;
+import connection.util.MyDataSource;
 import modelo.Alumno;
 import modelo.dao.AbstractGenericDao;
 import modelo.events.BDModificadaEvent;
 import modelo.events.BDModificadaListener;
-import modelo.util.ConnectionManager;
-import modelo.util.MyDataSource;
 
 /**
  *
@@ -35,6 +36,8 @@ AbstractGenericDao<Alumno> implements IAlumnoDao, Serializable {
 	//añadimos un atributo tipo MyDataSource
 	private MyDataSource dataSource;
 
+	//atributo con la ruta al archivo 
+	private String ruta="src/main/resources/db.properties";
 	// Suponemos que solo habrá un receptor.
 	// Para varios receptores habría que tener una lista de listeners
 	private BDModificadaListener receptor;
@@ -49,7 +52,7 @@ AbstractGenericDao<Alumno> implements IAlumnoDao, Serializable {
 	}
 
 	public AlumnoMySQLDao() {
-		this.dataSource = ConnectionManager.getDataSource();
+		this.dataSource = ConnectionManager.getDataSource(ruta);
 
 	}
 
@@ -85,10 +88,10 @@ AbstractGenericDao<Alumno> implements IAlumnoDao, Serializable {
 				// Notificamos al receptor el evento de modificación
 				this.receptor.capturarBDModificada(new BDModificadaEvent(this));
 				exito = (rowCount == 1);
-
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+//
+//			} catch (ClassNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
 			} catch (SQLException e) {
 
 				if (con != null) {

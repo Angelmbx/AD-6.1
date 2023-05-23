@@ -14,15 +14,15 @@ public class Main {
 	public static void main(String[] args) {
 	//Creamos entidad alumno
 		Alumno alumno = new Alumno();
-		alumno.setApellidos("Nuevos ap");
-		alumno.setDNI("12341234l");
+		alumno.setApellidos("Miranda Blanco");
+		alumno.setDNI("53172500-L");
 
-		LocalDate localDate = LocalDate.of(2014, 9, 11);
+		LocalDate localDate = LocalDate.of(1990, 11, 12);
 		Date date = Date.valueOf(localDate);
 		alumno.setFechaNac(date);
 		alumno.setDireccion("Vigo");
 
-		alumno.setNombre("Nuevo nombre");
+		alumno.setNombre("Angel");
 		
 		//Creamos DAO
 		IAlumnoDao alumnoMySQLDao = new AlumnoMySQLDao();
